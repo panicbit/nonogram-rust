@@ -53,12 +53,12 @@ fn draw(rb: &RustBox, game: &Game) {
 
 fn draw_field(rb: &RustBox, game: &Game) {
     for ((y, x), cell) in game.field().indexed_iter() {
-        let ch = match cell.mode() {
-            Mode::Marked => '▉',
-            Mode::Crossed => 'X',
-            _ => '_'
+        let (ch, color) = match cell.mode() {
+            Mode::Marked => ('#', Color::Blue),
+            Mode::Crossed => ('x', Color::Default),
+            _ => ('.', Color::Default)
         };
-        rb.print_char(x, y, Style::empty(), Color::Default, Color::Default, ch)
+        rb.print_char(x, y, Style::empty(), Color::Default, color, ch)
     }
 }
 
