@@ -2,6 +2,7 @@
 name = "nonogram"
 version = "0.1.0"
 dependencies = [
+ "itertools 0.4.13 (registry+https://github.com/rust-lang/crates.io-index)",
  "ndarray 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustbox 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

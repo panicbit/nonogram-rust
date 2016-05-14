@@ -3,10 +3,11 @@ authors = ["panicbit <panicbit.dev@gmail.com>"]
 name = "nonogram"
 version = "0.1.0"
 
+[[bin]]
+doc = false
+name = "nonogram"
+
 [dependencies]
+itertools = "0.4.13"
 ndarray = "0.5.1"
 rustbox = "0.8.1"
-
-[[bin]]
-name = "nonogram"
-doc = false

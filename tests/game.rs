@@ -27,3 +27,20 @@ fn game_from_file() {
 
     assert_eq!(field, &test_field);
 }
+
+#[test]
+fn game_won() {
+    let mut game = Game::from_file("tests/small_test").expect("data file");
+
+    game.mark(1, 0);
+    game.mark(3, 0);
+    game.mark(1, 1);
+    game.mark(2, 1);
+    game.mark(3, 1);
+    game.mark(0, 2);
+    game.mark(1, 2);
+    game.mark(2, 2);
+    game.mark(3, 2);
+
+    assert!(game.won());
+}

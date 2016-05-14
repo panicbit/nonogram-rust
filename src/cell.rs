@@ -1,5 +1,4 @@
 use std::fmt;
-use super::*;
 
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct Cell {
