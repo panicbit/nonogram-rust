@@ -6,6 +6,7 @@ use std::io;
 use std::io::prelude::*;
 use std::path::Path;
 use ndarray::{OwnedArray, Ix};
+use std::iter::repeat;
 
 pub mod cell;
 use cell::Cell;
@@ -15,8 +16,8 @@ pub type Field = OwnedArray<Cell, (Ix, Ix)>;
 #[derive(Debug)]
 pub struct Game {
     field: Field,
-    rows: usize,
-    cols: usize
+    width: usize,
+    height: usize
 }
 
 impl Game {
@@ -30,38 +31,21 @@ impl Game {
 
         try!(file.read_to_string(&mut input));
 
-        let (cols, rows, mut field) = input.lines().fold((0, 0, Vec::new()), |(cols, rows, mut field), line| {
-            let (cols_inner, row) = line.chars().fold((0, Vec::new()), |(cols, mut row), ch| {
-                row.push(Cell::from(ch));
-                (cols + 1, row)
-            });
-            
-            field.push(row);
+        let height = input.lines().count();
+        let width = input.lines().map(str::len).max().unwrap_or(0);
+        let mut field = Vec::new();
 
-            (
-                if cols_inner > cols { cols_inner } else { cols },
-                rows + 1,
-                field
-            )
-        });
-
-        // Pad the rows
-        for row in field.iter_mut() {
-            if row.len() < cols {
-                for _ in 0..(rows-row.len()-1) {
-                    row.push(Cell::default());
-                }
-            }
+        for line in input.lines() {
+            field.extend(line.chars().map(Cell::from));
+            field.extend(repeat(Cell::default()).take(width-line.len()));
         }
 
-        let field = field.into_iter().flat_map(|row| row.into_iter()).collect();
-
-        let field = Field::from_shape_vec((rows, cols), field).expect("foo");
+        let field = Field::from_shape_vec((height, width), field).expect("invalid shape");
 
         Ok(Game {
             field: field,
-            rows: rows,
-            cols: cols
+            width: width,
+            height: height
         })
     }
 
