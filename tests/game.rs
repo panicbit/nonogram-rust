@@ -1,6 +1,5 @@
 extern crate nonogram;
 use nonogram::*;
-use nonogram::cell::*;
 
 #[test]
 fn cell_from_char() {

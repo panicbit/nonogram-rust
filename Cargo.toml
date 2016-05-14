@@ -6,3 +6,7 @@ version = "0.1.0"
 [dependencies]
 ndarray = "0.5.1"
 rustbox = "0.8.1"
+
+[[bin]]
+name = "nonogram"
+doc = false

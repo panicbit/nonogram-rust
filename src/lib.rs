@@ -1,16 +1,16 @@
 #![warn(missing_debug_implementations)]
-extern crate rustbox;
 extern crate ndarray;
 use std::fs::File;
 use std::io;
 use std::io::prelude::*;
 use std::path::Path;
-use ndarray::{OwnedArray, Ix};
+use ndarray::OwnedArray;
 use std::iter::repeat;
 
 pub mod cell;
-use cell::Cell;
+pub use cell::{Cell, Mode};
 
+pub type Ix = ndarray::Ix;
 pub type Field = OwnedArray<Cell, (Ix, Ix)>;
 
 #[derive(Debug)]
@@ -23,6 +23,15 @@ pub struct Game {
 impl Game {
     pub fn field(&self) -> &Field {
         &self.field
+    }
+
+    pub fn mark(&mut self, x: Ix, y: Ix) {
+        if let Some(cell) = self.field.get_mut((y, x)) {
+            match cell.mode() {
+                Mode::Marked | Mode::Crossed => cell.set_mode(Mode::Empty),
+                Mode::Empty => cell.set_mode(Mode::Marked)
+            }
+        }
     }
 
     pub fn from_file<P: AsRef<Path>>(path: P) -> io::Result<Game> {

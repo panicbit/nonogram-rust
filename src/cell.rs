@@ -3,8 +3,8 @@ use super::*;
 
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct Cell {
-    required: bool,
-    mode: Mode
+    pub required: bool,
+    pub mode: Mode
 }
 
 impl Default for Cell {
